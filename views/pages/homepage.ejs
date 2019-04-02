@@ -28,7 +28,7 @@ For more information, see:
     background-color: white;
     font-size: 32px;
   }
-  .calculater-warper input:hover{
+  .calculater-warper input[type="button"]:hover{
     background-color: #cdcdcd;
     cursor: pointer;
   }
@@ -50,7 +50,7 @@ For more information, see:
     
   }
   .calculater-warper .C{
-    width: 50%;
+    width: 75%;
   }
   .calculater-warper .zero{
     width: 50%;
@@ -60,11 +60,8 @@ For more information, see:
     color:white;
   }
 </style>
-<script type="text/javascript">
-setTimeout(function sunrise () {
-  document.getElementsByClassName('header')[0].style.backgroundColor = '#118798';
-}, 0);
-</script>
+
+
 
 <div class="default-page">
   <div class="header">
@@ -80,27 +77,35 @@ setTimeout(function sunrise () {
           <p>
             If you're new to Sails, get started <a href="https://sailsjs.com/get-started">here</a>.
             <br/>
-            <small>(You'll learn about the framework and explore the files that were generated in this new app.)</small>
+            <small>(You'll learn about the framework and explore what the files that were generated in this app mean)</small>
           </p>
         </div>
       </li>
       <li class="clearfix">
         <div class="step">
           <div class="sprite two"></div>
-          <h3>Lift your app</h3>
+          <h3>Design your Controller</h3>
           <p>
-            Looks like you already ran <code>sails lift</code> to start up your app server. Nice work!
+            this page is being controlled by <code>CalculaterController</code> 
             <br/>
-            <small>(Remember to re-lift after making backend code changes.)</small>
+            <small>(you can see it in /api/controllers)</small>
           </p>
         </div>
       </li>
       <li class="clearfix">
         <div class="step">
           <div class="sprite three"></div>
-          <h3>Dive in</h3>
+          <h3>Run the app on server</h3>
           <p>
-            Blueprints are just the beginning.  You'll probably also want to learn how to customize your app's <a href="https://sailsjs.com/documentation/concepts/routes">routes</a>, build custom <a target="_blank" href="https://sailsjs.com/documentation/concepts/actions-and-controllers">actions</a>, set up <a href="https://sailsjs.com/documentation/concepts/policies">security policies</a>, configure your <a href="https://sailsjs.com/documentation/reference/configuration/sails-config-datastores">data sources</a>, and deploy to <a href="http://sailsjs.com/documentation/concepts/deployment">production</a>.
+            in order to see this page working you need to add it to a server that suports  <a href="https://nodejs.org">Node.js</a>,to run it localy you can use 
+            <br>
+            <code>
+              npm install sails -g
+            </code>
+            <br>
+            <code>
+              sails lift
+            </code> 
             <br/>
             <small>(For more help getting started, check out the links on this page.)</small>
           </p>
@@ -109,27 +114,74 @@ setTimeout(function sunrise () {
     </ul>
      <div class="calculater-warper">
       <form>
-        <input type="text" name="data" class="data"id="data">
+        <input type="text" name="data" class="data"id="data" value="" >
         <br>
-        <input type="button" value="C" class="C">
-        <input type="button" value="%" >
-        <input type="button" value="+" class="operation">
-        <input type="button" value="7">
-        <input type="button" value="8">
-        <input type="button" value="9">
-        <input type="button" value="-" class="operation">
-        <input type="button" value="4">
-        <input type="button" value="5">
-        <input type="button" value="6">
-        <input type="button" value="*" class="operation"> 
-        <input type="button" value="1">
-        <input type="button" value="2">
-        <input type="button" value="3">
-        <input type="button" value="/" class="operation">
-        <input type="button" value="0" class="zero">
-        <input type="button" value=".">
-        <input type="button" value="=" class="operation">
+        <input type="button" value="C" id="C" class="C operation" onClick="sendOperation(this)">
+        <input type="button" value="+" id="plus" class="operation" onClick="append(this)">
+        <input type="button" value="7" id="7" class="number"onClick="append(this)">
+        <input type="button" value="8" id="8" class="number"onClick="append(this)">
+        <input type="button" value="9" id="9" class="number"onClick="append(this)">
+        <input type="button" value="-" id="minus" class="operation" onClick="append(this)">
+        <input type="button" value="4" id="4" class="number"onClick="append(this)">
+        <input type="button" value="5" id="5" class="number"onClick="append(this)">
+        <input type="button" value="6" id="6" class="number"onClick="append(this)">
+        <input type="button" value="*" id="multiply"class="operation" onClick="append(this)">  
+        <input type="button" value="1" id="1" class="number"onClick="append(this)">
+        <input type="button" value="2" id="2" class="number"onClick="append(this)">
+        <input type="button" value="3" id="3" class="number"onClick="append(this)">
+        <input type="button" value="/" id="divide" class="operation"onClick="append(this)" >
+        <input type="button" value="0" id ="0" class="zero number"  onClick="append(this)">
+        <input type="button" value="." id="period" class="number"onClick="append(this)">
+        <input type="button" value="=" id="equal" class="operation"onClick="sendOperation(this)" >
       </form>
      </div>
   </div>
 </div>
+<!-- scripts -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"> 
+</script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+setTimeout(function sunrise () {
+  document.getElementsByClassName('header')[0].style.backgroundColor = '#118798';
+}, 0);
+</script>
+<script>
+
+  function append(e) {
+    
+      textBox=document.getElementById('data');
+      textBoxValue=textBox.getAttribute('value');
+      toAppend = e.getAttribute('value');
+      
+      url = 'http://localhost:1337/calculater/append';
+      $.post(url,
+        {
+          'textBoxValue':textBoxValue,
+          'toAppend':toAppend
+        },
+        function(result,satus){
+          console.log(result);
+          textBox.setAttribute('value',result);
+        }
+      );
+    };
+  function sendOperation(e) {
+    textBox=document.getElementById('data');
+    operation = e.getAttribute('value');
+    expression = textBox.getAttribute('value');
+    url = 'http://localhost:1337/calculater/calculate';
+    $.post(url,
+      {
+        'operation':operation,
+        'expression':expression
+      },
+      function(res,satus){
+        console.log(res);
+        textBox.setAttribute('value',res.result);
+      }
+    );
+  };
+</script>

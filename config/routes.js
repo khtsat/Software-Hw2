@@ -20,6 +20,9 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': { view: 'pages/homepage' },
+  'Post /hi' : { view: 'pages/homepage' },
+  'Post /calculater/calculate': 'CalculaterController.calculate',
+  'Post /calculater/append': 'CalculaterController.append',
 
 
   /***************************************************************************
