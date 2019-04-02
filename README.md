@@ -3,7 +3,7 @@
 a [Sails v1](https://sailsjs.com) application
 
 
-### Links
+## Links
 
 + [Sails framework documentation](https://sailsjs.com/get-started)
 + [Version notes / upgrading](https://sailsjs.com/documentation/upgrading)
@@ -12,9 +12,18 @@ a [Sails v1](https://sailsjs.com) application
 + [Professional / enterprise options](https://sailsjs.com/enterprise)
 
 
-### Version info
+## Version info
 
 This app was originally generated on Tue Apr 02 2019 04:21:53 GMT+0300 (EEST) using Sails v1.1.0.
+
+## How to run
+
+```sh
+git clone https://github.com/khtsat/Software-Hw2 
+cd Software-Hw2/
+npm install
+npx sails lift
+```
 
 <!-- Internally, Sails used [`sails-generate@1.16.6`](https://github.com/balderdashy/sails-generate/tree/v1.16.6/lib/core-generators/new). -->
 
